@@ -3,7 +3,7 @@
 **MCP Connector** is a lightweight server that can run and manage multiple Model Context Protocol (MCP) servers, specifically designed to integrate with [TypingMind](https://www.typingmind.com/mcp). It provides an easy way to run MCP servers on your local computer or a remote server, making it possible to connect your custom AI models or tools with TypingMind through a simple REST API.
 
 ---
-
+test
 ## How to Run on Your Local Device
 
 You can quickly start the MCP Connector using `npx` (no install required):
