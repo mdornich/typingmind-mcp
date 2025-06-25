@@ -25,11 +25,12 @@ RUN pnpm install --prod
 # Copy the rest of the application source code
 COPY . .
 
-# Set the default port the app will run on
-ENV PORT=50880
+# Set environment variables for Railway to expose the correct port and bind externally
+ENV PORT=8080
+ENV HOSTNAME=0.0.0.0
 
-# Make port 50880 available to the world outside this container
-EXPOSE 50880
+# Make port 8080 available to the world outside this container
+EXPOSE 8080
 
 # Define the command to run the app
 CMD ["node", "bin/index.js"]
