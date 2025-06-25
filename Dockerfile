@@ -33,4 +33,4 @@ ENV HOSTNAME=0.0.0.0
 EXPOSE 8080
 
 # Define the command to run the app
-CMD ["node", "bin/index.js"]
+CMD ["node", "bin/index.js", "NuKXn-iw1VyQeqUH22aj3"]
