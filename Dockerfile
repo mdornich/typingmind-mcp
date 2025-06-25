@@ -36,6 +36,9 @@ RUN pnpm install --prod
 # Copy the rest of the application source code
 COPY . .
 
+# Copy the credentials folder into the image
+COPY credentials /app/credentials
+
 # Set environment variables for Railway to expose the correct port and bind externally
 ENV PORT=8080
 ENV HOSTNAME=0.0.0.0
