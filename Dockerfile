@@ -16,6 +16,17 @@ WORKDIR /app
 # Install pnpm globally
 RUN npm install -g pnpm
 
+# Install all MCP plugins globally so npx doesn't have to fetch them
+RUN npm install -g \
+    @supabase/mcp-server-supabase \
+    @notionhq/notion-mcp-server \
+    @modelcontextprotocol/server-sequential-thinking \
+    @modelcontextprotocol/server-memory \
+    @upstash/context7-mcp \
+    @clayhq/clay-mcp \
+    @modelcontextprotocol/server-gdrive \
+    @modelcontextprotocol/server-puppeteer
+
 # Copy package.json and pnpm-lock.yaml first to leverage Docker cache
 COPY package.json pnpm-lock.yaml ./
 
