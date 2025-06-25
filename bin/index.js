@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+console.log("🔥 Running my custom MCP code...");
+console.log("Using auth token:", process.argv[2] || process.env.MCP_AUTH_TOKEN);
 
 const server = require('../lib/server');
 const chalk = require('chalk');
