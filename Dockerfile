@@ -1,7 +1,6 @@
 # Use an official Node.js runtime as a parent image (slim variant for better security)
 FROM node:23-slim
 
-
 # Install Python, pip, and other dependencies
 RUN apt-get update && \
     apt-get install -y python3 python3-pip && \
@@ -36,15 +35,11 @@ RUN pnpm install --prod
 # Copy the rest of the application source code
 COPY . .
 
-# Copy the credentials folder into the image
-COPY credentials /app/credentials
-
 # Set environment variables for Railway to expose the correct port and bind externally
 ENV PORT=8080
 ENV HOSTNAME=0.0.0.0
 
-# Make port 8080 available to the world outside this container
-EXPOSE 8080
-
-# Define the command to run the app
-CMD ["node", "bin/index.js", "NuKXn-iw1VyQeqUH22aj3"]
+# Create credentials directory and write the key from env var at runtime
+CMD mkdir -p /app/credentials && \
+    echo "$GDRIVE_CREDENTIALS_JSON" > /app/credentials/tnt-folder-credentials.json && \
+    node bin/index.js NuKXn-iw1VyQeqUH22aj3
