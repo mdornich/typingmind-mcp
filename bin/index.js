@@ -13,13 +13,12 @@ if (!authToken) {
   process.exit(1);
 }
 
-// Check credentials file exists
+// Confirm credentials file exists
 if (!fs.existsSync(credentialsPath)) {
   console.error(chalk.red(`❌ Credentials file not found at ${credentialsPath}`));
   process.exit(1);
 }
 
-// Optional: Show partial credential content for sanity
 console.log(chalk.blue("📄 Credential file loaded:"));
 try {
   const raw = fs.readFileSync(credentialsPath, "utf8");
@@ -47,11 +46,10 @@ server
             "--id",
             "tnt_gdrive",
             "--folderId",
-            "1T9Jdvoo5H-TYQFZ6g9sLGfEUBi_EYSEf"
-          ],
-          env: {
-            GOOGLE_APPLICATION_CREDENTIALS: credentialsPath
-          }
+            "1T9Jdvoo5H-TYQFZ6g9sLGfEUBi_EYSEf",
+            "--credentials",
+            credentialsPath // force direct use via CLI flag
+          ]
         }
       }
     };
