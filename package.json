@@ -8,8 +8,8 @@
     "start": "node bin/index.js"
   },
   "dependencies": {
-    "node-fetch": "^2.6.11",
     "chalk": "^4.1.2",
+    "node-fetch": "^2.6.11",
     "express": "^4.18.4"
   },
   "engines": {
