@@ -1,21 +1,20 @@
-# Use official Node image
-FROM node:20
+# Use Node slim base
+FROM node:18-slim
+
+# Enable corepack (for pnpm)
+RUN corepack enable
 
 # Set working directory
 WORKDIR /app
 
-# Enable and install pnpm
-RUN corepack enable && corepack prepare pnpm@latest --activate
-
-# Copy and install only dependencies
+# Copy package manifests first (Docker cache optimization)
 COPY package.json pnpm-lock.yaml ./
+
+# Install only production dependencies
 RUN pnpm install --prod
 
-# Copy the rest of the code
+# Copy the rest of the app (including bin/index.js)
 COPY . .
 
-# Expose port
-EXPOSE 8080
-
-# Start server
+# Set default start command
 CMD ["node", "bin/index.js"]
