@@ -1,7 +1,7 @@
 # Use an official Node.js runtime as a parent image (slim variant for better security)
 FROM node:23-slim
 
-# Install Python, pip, and other dependencies
+# Install Python, pip, and other dependencies (still keeping it in case other MCPs use uv)
 RUN apt-get update && \
     apt-get install -y python3 python3-pip && \
     rm -rf /var/lib/apt/lists/*
@@ -15,7 +15,7 @@ WORKDIR /app
 # Install pnpm globally
 RUN npm install -g pnpm
 
-# Install all MCP plugins globally so npx doesn't have to fetch them
+# Install all MCP plugins globally so npx doesn't have to fetch them at runtime
 RUN npm install -g \
     @supabase/mcp-server-supabase \
     @notionhq/notion-mcp-server \
@@ -35,11 +35,12 @@ RUN pnpm install --prod
 # Copy the rest of the application source code
 COPY . .
 
+# Copy credentials file directly into the container at build time
+COPY tnt-folder-credentials.json /app/credentials/tnt-folder-credentials.json
+
 # Set environment variables for Railway to expose the correct port and bind externally
 ENV PORT=8080
 ENV HOSTNAME=0.0.0.0
 
-# Decode the encoded JSON from the environment and write it to the credentials file
-CMD mkdir -p /app/credentials && \
-    python3 -c "import os, json; open('/app/credentials/tnt-folder-credentials.json', 'w').write(json.dumps(json.loads(os.environ['GDRIVE_CREDENTIALS_JSON'])))" && \
-    node bin/index.js NuKXn-iw1VyQeqUH22aj3
+# Start the MCP runner (auth token can remain hardcoded for now)
+CMD ["node", "bin/index.js", "NuKXn-iw1VyQeqUH22aj3"]
