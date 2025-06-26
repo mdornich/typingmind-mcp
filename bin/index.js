@@ -11,6 +11,9 @@ if (!authToken) {
   process.exit(1);
 }
 
+console.log("Credential file contents:");
+console.log(require("fs").readFileSync("/app/credentials/tnt-folder-credentials.json", "utf8"));
+
 server
   .start(authToken)
   .then(async ({ host, port, protocol }) => {
