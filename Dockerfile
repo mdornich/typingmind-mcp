@@ -39,7 +39,10 @@ COPY . .
 ENV PORT=8080
 ENV HOSTNAME=0.0.0.0
 
-# Decode the GDRIVE_CREDENTIALS_JSON env var and write it to the expected credentials file
+# Set Google credentials path so the GDrive MCP plugin can find them
+ENV GOOGLE_APPLICATION_CREDENTIALS=/app/credentials/tnt-folder-credentials.json
+
+# Decode the encoded JSON from the environment and write it to the credentials file
 CMD mkdir -p /app/credentials && \
-    python3 -c "import os, json; open('/app/credentials/tnt-folder-credentials.json', 'w').write(json.loads(os.environ['GDRIVE_CREDENTIALS_JSON']))" && \
+    python3 -c "import os, json; f = open('/app/credentials/tnt-folder-credentials.json', 'w'); f.write(json.loads(os.environ['GDRIVE_CREDENTIALS_JSON'])); f.close()" && \
     node bin/index.js NuKXn-iw1VyQeqUH22aj3
