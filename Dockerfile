@@ -38,11 +38,9 @@ COPY . .
 # Set environment variables for Railway to expose the correct port and bind externally
 ENV PORT=8080
 ENV HOSTNAME=0.0.0.0
-
-# Set Google credentials path so the GDrive MCP plugin can find them
 ENV GOOGLE_APPLICATION_CREDENTIALS=/app/credentials/tnt-folder-credentials.json
 
 # Decode the encoded JSON from the environment and write it to the credentials file
 CMD mkdir -p /app/credentials && \
-    python3 -c "import os, json; f = open('/app/credentials/tnt-folder-credentials.json', 'w'); f.write(json.loads(os.environ['GDRIVE_CREDENTIALS_JSON'])); f.close()" && \
+    python3 -c "import os, json; creds = json.loads(os.environ['GDRIVE_CREDENTIALS_JSON']); open('/app/credentials/tnt-folder-credentials.json', 'w').write(json.dumps(creds))" && \
     node bin/index.js NuKXn-iw1VyQeqUH22aj3
