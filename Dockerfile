@@ -4,14 +4,15 @@ FROM node:18
 # Set the working directory
 WORKDIR /app
 
-# Copy only what's needed to install dependencies
+# Copy package.json and install dependencies
 COPY package.json ./
 
-# Install only production dependencies using npm
-RUN npm install --omit=dev
+RUN npm install --production && \
+    echo "Installed packages:" && \
+    ls -la node_modules
 
-# Copy the rest of your code
+# Copy the rest of the project
 COPY . .
 
-# Start the server
+# Set entrypoint
 CMD ["npm", "start"]
