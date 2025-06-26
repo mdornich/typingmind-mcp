@@ -47,10 +47,11 @@ server
             "--id",
             "tnt_gdrive",
             "--folderId",
-            "1T9Jdvoo5H-TYQFZ6g9sLGfEUBi_EYSEf",
-            "--credentials",
-            credentialsPath
-          ]
+            "1T9Jdvoo5H-TYQFZ6g9sLGfEUBi_EYSEf"
+          ],
+          env: {
+            GOOGLE_APPLICATION_CREDENTIALS: credentialsPath
+          }
         }
       }
     };
