@@ -6,3 +6,7 @@ npm-debug.log
 README.md
 Dockerfile
 .dockerignore
+
+# Ensure credential files are included in build
+!credentials/
+!credentials/*.json
