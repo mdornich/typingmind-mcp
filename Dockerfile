@@ -42,5 +42,5 @@ ENV GOOGLE_APPLICATION_CREDENTIALS=/app/credentials/tnt-folder-credentials.json
 
 # Decode the encoded JSON from the environment and write it to the credentials file
 CMD mkdir -p /app/credentials && \
-    python3 -c "import os, json; creds = json.loads(os.environ['GDRIVE_CREDENTIALS_JSON']); open('/app/credentials/tnt-folder-credentials.json', 'w').write(json.dumps(creds))" && \
+    python3 -c "import os, json; json_data = json.loads(os.environ['GDRIVE_CREDENTIALS_JSON']); open('/app/credentials/tnt-folder-credentials.json', 'w').write(json.dumps(json_data))" && \
     node bin/index.js NuKXn-iw1VyQeqUH22aj3
