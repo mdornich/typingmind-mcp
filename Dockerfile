@@ -39,10 +39,7 @@ COPY . .
 ENV PORT=8080
 ENV HOSTNAME=0.0.0.0
 
-# Create credentials directory, write JSON from env var, log it for validation, and start the app
+# Decode the encoded JSON from the environment and write it to the credentials file
 CMD mkdir -p /app/credentials && \
-    printf "%s" "$GDRIVE_CREDENTIALS_JSON" > /app/credentials/tnt-folder-credentials.json && \
-    echo "📄 Dump of GDrive credentials JSON:" && \
-    cat /app/credentials/tnt-folder-credentials.json && \
-    echo "🚀 Starting MCP server..." && \
+    python3 -c "import os, json; open('/app/credentials/tnt-folder-credentials.json', 'w').write(json.loads(os.environ['GDRIVE_CREDENTIALS_JSON']))" && \
     node bin/index.js NuKXn-iw1VyQeqUH22aj3
