@@ -1,20 +1,17 @@
-# Use Node slim base
-FROM node:18-slim
+# Use Node.js 18 base image
+FROM node:18
 
-# Enable corepack (for pnpm)
-RUN corepack enable
-
-# Set working directory
+# Set the working directory
 WORKDIR /app
 
-# Copy package manifests first (Docker cache optimization)
-COPY package.json pnpm-lock.yaml ./
+# Copy only what's needed to install dependencies
+COPY package.json ./
 
-# Install only production dependencies
-RUN pnpm install --prod
+# Install only production dependencies using npm
+RUN npm install --omit=dev
 
-# Copy the rest of the app (including bin/index.js)
+# Copy the rest of your code
 COPY . .
 
-# Set default start command
-CMD ["node", "bin/index.js"]
+# Start the server
+CMD ["npm", "start"]
